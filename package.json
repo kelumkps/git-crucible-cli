@@ -1,33 +1,34 @@
 {
-  "name": "git-crucible-cli",
-  "version": "1.0.0",
-  "description": "An interactive command-line tool for git-crucible-review-creator",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kelumkps/git-crucible-cli.git"
-  },
-  "keywords": [
-    "git",
-    "crucible",
-    "code review",
-    "cli"
-  ],
-  "preferGlobal": true,
-  "bin": {
-    "git-crucible": "git-crucible.js"
-  },
-  "author": "Kelum Senanayake",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kelumkps/git-crucible-cli/issues"
-  },
-  "homepage": "https://github.com/kelumkps/git-crucible-cli#readme",
-  "dependencies": {
-    "chalk": "^1.1.3",
-    "commander": "^2.9.0",
-    "figlet": "^1.2.0",
-    "inquirer": "^2.0.0",
-    "pkginfo": "^0.4.0"
-  }
+    "name": "git-crucible-cli",
+    "version": "1.0.0",
+    "description": "An interactive command-line tool for git-crucible-review-creator",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kelumkps/git-crucible-cli.git"
+    },
+    "keywords": [
+        "git",
+        "crucible",
+        "code review",
+        "cli"
+    ],
+    "preferGlobal": true,
+    "bin": {
+        "git-crucible": "git-crucible.js"
+    },
+    "author": "Kelum Senanayake",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/kelumkps/git-crucible-cli/issues"
+    },
+    "homepage": "https://github.com/kelumkps/git-crucible-cli#readme",
+    "dependencies": {
+        "chalk": "^1.1.3",
+        "commander": "^2.9.0",
+        "figlet": "^1.2.0",
+        "inquirer": "^2.0.0",
+        "pkginfo": "^0.4.0",
+        "valid-url": "^1.0.9"
+    }
 }

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 'use strict';
 
 var program = require('commander');
@@ -8,7 +9,7 @@ var logo = require('./lib/logo');
 
 program
     .version(module.exports.version)
-    .option('-a, --all','specify all installed scripts')
+    .option('-a, --all', 'specify all installed scripts')
     .command('install', 'install and configure git-crucible-review-creator script in to a desired git project')
     .command('uninstall [project-path]', 'uninstall git-crucible-review-creator script from a given git project')
     .command('disable [project-path]', 'disable git-crucible-review-creator script from a given git project')

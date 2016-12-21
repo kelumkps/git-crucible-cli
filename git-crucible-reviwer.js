@@ -7,7 +7,7 @@ var pkginfo = require('pkginfo')(module, 'version', 'description');
 var logo = require('./lib/logo');
 
 program
-  .alias('rw')
-  .parse(process.argv);
+    .alias('rw')
+    .parse(process.argv);
 
 logo.display(module.exports.description, module.exports.version);
