@@ -1,0 +1,26 @@
+{
+  "name": "git-crucible-cli",
+  "version": "1.0.0",
+  "description": "An interactive command-line tool for git-crucible-review-creator",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kelumkps/git-crucible-cli.git"
+  },
+  "keywords": [
+    "git",
+    "crucible",
+    "code review",
+    "cli"
+  ],
+  "preferGlobal": true,
+  "bin": {
+    "git-crucible": "index.js"
+  },
+  "author": "Kelum Senanayake",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kelumkps/git-crucible-cli/issues"
+  },
+  "homepage": "https://github.com/kelumkps/git-crucible-cli#readme"
+}
