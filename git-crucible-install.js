@@ -40,6 +40,8 @@ function verifyHttps(answers, done) {
                 terminate();
             }
         });
+    } else {
+        done();
     }
 }
 
