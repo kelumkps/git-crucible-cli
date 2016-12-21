@@ -21,14 +21,32 @@ program
 
 logo.display(module.exports.description, module.exports.version);
 
-getCrucibleConfigurations(validateUserInputs);
+promptUserForConfigurations(function(answers) {
+    validateUserInputs(answers, function() {
+        verifyHttps(answers, function() {
+            console.log("end of process");
+        });
+    });
+});
 
-function validateUserInputs(answers) {
+
+function verifyHttps(answers, done) {
+    if (!validator.isHttpsUri(answers['crucibleUrl'])) {
+        var message = "The given Crucible URL is not using HTTPS which is not secure enough. Do you want to continue anyway?";
+        getConfirmation(message, function(confirm) {
+            if (confirm.proceed) {
+                done();
+            } else {
+                terminate();
+            }
+        });
+    }
+}
+
+function validateUserInputs(answers, done) {
     var status = new Spinner('Let us verify your inputs, please wait...');
     status.start();
-    console.log(answers);
     var crucibleProjectUrl = url(answers['crucibleUrl'], 'rest-service', 'projects-v1', answers['projectKey']);
-    console.log("crucibleProjectUrl", crucibleProjectUrl);
 
     request.get(crucibleProjectUrl, {
         'auth': {
@@ -39,20 +57,35 @@ function validateUserInputs(answers) {
         status.stop();
         if (!error && response.statusCode == 200) {
             console.log(chalk.green("Verified your inputs successfully. Proceeding with the next step..."));
+            done();
         } else {
             var message = "Unable to connect to the Crucible server at this moment. Do you want to continue anyway?";
-            console.log(chalk.red(message));
-            // if (!validator.isHttpsUri(answers['crucibleUrl'])) {
-            //     message = message + " Also the given Crucible URL is not using HTTPS which is not secure enough.";
-            // }
-
+            getConfirmation(message, function(confirm) {
+                if (confirm.proceed) {
+                    done();
+                } else {
+                    terminate();
+                }
+            });
         }
-
     });
-
 }
 
-function getCrucibleConfigurations(callback) {
+function getConfirmation(message, done) {
+    var questions = [{
+        name: 'proceed',
+        type: 'confirm',
+        message: chalk.red(message)
+    }];
+    inquirer.prompt(questions).then(done);
+}
+
+function terminate() {
+    console.log(chalk.green("Terminating  the installation. Good Bye and have a nice day!"));
+    process.exit(0);
+}
+
+function promptUserForConfigurations(done) {
     var questions = [{
             name: 'projectPath',
             type: 'input',
@@ -124,5 +157,5 @@ function getCrucibleConfigurations(callback) {
         }
 
     ];
-    inquirer.prompt(questions).then(callback);
+    inquirer.prompt(questions).then(done);
 }
