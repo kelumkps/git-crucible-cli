@@ -6,9 +6,12 @@ var program = require('commander');
 var inquirer = require('inquirer');
 var path = require('path');
 var fs = require('fs');
+var url = require('url-join');
 var chalk = require('chalk');
 var validator = require('valid-url');
-
+var CLI = require('clui'),
+    Spinner = CLI.Spinner;
+var request = require('request');
 var pkginfo = require('pkginfo')(module, 'version', 'description');
 var logo = require('./lib/logo');
 
@@ -18,9 +21,36 @@ program
 
 logo.display(module.exports.description, module.exports.version);
 
-getCrucibleConfigurations(function(args) {
-    console.log(args);
-});
+getCrucibleConfigurations(validateUserInputs);
+
+function validateUserInputs(answers) {
+    var status = new Spinner('Let us verify your inputs, please wait...');
+    status.start();
+    console.log(answers);
+    var crucibleProjectUrl = url(answers['crucibleUrl'], 'rest-service', 'projects-v1', answers['projectKey']);
+    console.log("crucibleProjectUrl", crucibleProjectUrl);
+
+    request.get(crucibleProjectUrl, {
+        'auth': {
+            'user': answers['username'],
+            'pass': answers['password']
+        }
+    }, function(error, response) {
+        status.stop();
+        if (!error && response.statusCode == 200) {
+            console.log(chalk.green("Verified your inputs successfully. Proceeding with the next step..."));
+        } else {
+            var message = "Unable to connect to the Crucible server at this moment. Do you want to continue anyway?";
+            console.log(chalk.red(message));
+            // if (!validator.isHttpsUri(answers['crucibleUrl'])) {
+            //     message = message + " Also the given Crucible URL is not using HTTPS which is not secure enough.";
+            // }
+
+        }
+
+    });
+
+}
 
 function getCrucibleConfigurations(callback) {
     var questions = [{
