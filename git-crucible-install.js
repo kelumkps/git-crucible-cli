@@ -5,15 +5,15 @@
 var program = require('commander');
 var inquirer = require('inquirer');
 var path = require('path');
-var fs = require('fs');
 var url = require('url-join');
 var chalk = require('chalk');
 var validator = require('valid-url');
-var CLI = require('clui'),
-    Spinner = CLI.Spinner;
 var request = require('request');
 var pkginfo = require('pkginfo')(module, 'version', 'description');
 var logo = require('./lib/logo');
+var files = require('./lib/files');
+var downloader = require('./lib/git-downloader');
+var Spinner = require('./lib/spinner');
 
 program
     .alias('in')
@@ -24,10 +24,32 @@ logo.display(module.exports.description, module.exports.version);
 promptUserForConfigurations(function(answers) {
     validateUserInputs(answers, function() {
         verifyHttps(answers, function() {
-            console.log("end of process");
+            install(answers);
         });
     });
 });
+
+function install(answers) {
+    var status = Spinner.create('Downloading latest git-crucible-review-creator script, please wait...');
+    status.start();
+    var gitHubRepoUrl = 'https://github.com/kelumkps/git-crucible-review-creator.git#master';
+    var downloadPath = path.join(files.getAppDirectoryPath(), 'git-crucible-review-creator');
+    files.remove(downloadPath);
+    downloader.downloadAndSaveFromGit(gitHubRepoUrl, downloadPath, function() {
+        Spinner.update(status, 'Download is completed, applying configurations...');
+        var destFile = path.join(answers["projectPath"], ".git", "hooks", "pre-push");
+        files.copyOrReplace(path.join(files.getAppDirectoryPath(), 'git-crucible-review-creator', 'pre-push'), destFile);
+        files.replaceInFile(destFile, "#HOST_PORT#", answers["crucibleUrl"].replace(/\/+$/, ""));
+        files.replaceInFile(destFile, "#PROJECT_KEY#", answers["projectKey"]);
+        files.replaceInFile(destFile, "#USERNAME#", answers["username"]);
+        files.replaceInFile(destFile, "#PASSWORD#", Buffer.from(answers["password"]).toString('base64'));
+        files.replaceInFile(destFile, "#COMMA_SEPERATED_USERNAMES#", answers["reviewers"].split(/[ ,]+/).filter(function(v){return v!==''}).join(','));
+        Spinner.update(status, 'Cleaning up resources...');
+        files.remove(downloadPath);
+        Spinner.update(status, 'Installation is completed successfully!');
+        status.stop();
+    });
+}
 
 
 function verifyHttps(answers, done) {
@@ -46,7 +68,7 @@ function verifyHttps(answers, done) {
 }
 
 function validateUserInputs(answers, done) {
-    var status = new Spinner('Let us verify your inputs, please wait...');
+    var status = Spinner.create('Let us verify your inputs, please wait...');
     status.start();
     var crucibleProjectUrl = url(answers['crucibleUrl'], 'rest-service', 'projects-v1', answers['projectKey']);
 
@@ -95,7 +117,7 @@ function promptUserForConfigurations(done) {
             validate: function(value) {
                 if (value.length) {
                     var scriptLocation = path.join(value, ".git", "hooks");
-                    if (fs.existsSync(scriptLocation)) {
+                    if (files.directoryExists(scriptLocation)) {
                         return true;
                     }
                 }
