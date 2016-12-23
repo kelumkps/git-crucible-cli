@@ -10,9 +10,18 @@ program
     .alias('rm')
     .parse(process.argv);
 
-operations.promptUserForConfirmation('remove reviewers to', {
-    description: module.exports.description,
-    version: module.exports.version
-}, function(location) {
-    operations.remove(location);
-});
+removeReviewers();
+
+function removeReviewers() {
+    var args = program.args;
+    var action = 'remove reviewers of';
+    if (args.length === 1) action = 'remove reviewer ' + args.join(',') + ' of';
+    if (args.length > 1) action = 'remove reviewers ' + args.join(',') + ' of';
+
+    operations.promptUserForConfirmation(action, {
+        description: module.exports.description,
+        version: module.exports.version
+    }, function(location) {
+        operations.add(location, args);
+    });
+}

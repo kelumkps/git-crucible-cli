@@ -113,7 +113,7 @@ function promptUserForConfigurations(done) {
             type: 'input',
             message: 'Enter your Crucible username:',
             validate: function(value) {
-                if (value.length) {
+                if (value.trim().length) {
                     return true;
                 } else {
                     return chalk.red('Please enter your Crucible username');
@@ -135,7 +135,7 @@ function promptUserForConfigurations(done) {
             type: 'input',
             message: 'Enter your Crucible project key:',
             validate: function(value) {
-                if (value.length) {
+                if (value.trim().length) {
                     return true;
                 } else {
                     return chalk.red('Please enter your Crucible project key');
@@ -146,7 +146,7 @@ function promptUserForConfigurations(done) {
             type: 'input',
             message: 'Enter your Crucible reviewers (separated by space):',
             validate: function(value) {
-                if (value.length) {
+                if (value.trim().length) {
                     return true;
                 } else {
                     return chalk.red('Please enter your Crucible reviewers (separated by space)');

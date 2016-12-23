@@ -10,9 +10,18 @@ program
     .alias('ad')
     .parse(process.argv);
 
-operations.promptUserForConfirmation('add reviewers to', {
-    description: module.exports.description,
-    version: module.exports.version
-}, function(location) {
-    operations.add(location);
-});
+addReviewers();
+
+function addReviewers() {
+    var reviewers = program.args;
+    var action = 'add reviewers to';
+    if (reviewers.length === 1) action = 'add reviewer ' + reviewers[0] + ' to';
+    if (reviewers.length > 1) action = 'add reviewers ' + reviewers.join(', ') + ' to';
+
+    operations.promptUserForConfirmation(action, {
+        description: module.exports.description,
+        version: module.exports.version
+    }, function(location) {
+        operations.add(location, reviewers);
+    });
+}
