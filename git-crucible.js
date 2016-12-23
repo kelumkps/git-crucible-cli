@@ -17,7 +17,6 @@ program
     .command('reviewer [project-path]', 'show configured reviewers');
 
 
-
 //if program was called with no arguments, show help.
 if (process.argv.slice(2).length === 0) {
     logo.display(module.exports.description, module.exports.version);
