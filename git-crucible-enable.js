@@ -4,10 +4,15 @@
 
 var program = require('commander');
 var pkginfo = require('pkginfo')(module, 'version', 'description');
-var logo = require('./lib/logo');
+var operations = require('./lib/operations');
 
 program
     .alias('en')
     .parse(process.argv);
 
-logo.display(module.exports.description, module.exports.version);
+operations.promptUserForConfirmation('enable', {
+    description: module.exports.description,
+    version: module.exports.version
+}, function(location) {
+    operations.enable(location);
+});

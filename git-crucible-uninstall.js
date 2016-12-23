@@ -3,12 +3,8 @@
 'use strict';
 
 var program = require('commander');
-var path = require('path');
 var pkginfo = require('pkginfo')(module, 'version', 'description');
-var logo = require('./lib/logo');
 var operations = require('./lib/operations');
-var files = require('./lib/files');
-
 
 program
     .alias('un')
