@@ -36,7 +36,7 @@ function verifyHttps(answers, done) {
             if (confirm.proceed) {
                 done();
             } else {
-                terminate();
+                operations.terminate();
             }
         });
     } else {
@@ -65,7 +65,7 @@ function validateUserInputs(answers, done) {
                 if (confirm.proceed) {
                     done();
                 } else {
-                    terminate();
+                    operations.terminate();
                 }
             });
         }
@@ -81,10 +81,7 @@ function getConfirmation(message, done) {
     inquirer.prompt(questions).then(done);
 }
 
-function terminate() {
-    console.log(chalk.green("Terminating  the installation. Good Bye and have a nice day!"));
-    process.exit(0);
-}
+
 
 function promptUserForConfigurations(done) {
     var questions = [{
