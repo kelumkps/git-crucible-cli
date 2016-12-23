@@ -14,7 +14,7 @@ program
     .command('uninstall [project-path]', 'uninstall git-crucible-review-creator script from a given git project')
     .command('disable [project-path]', 'disable git-crucible-review-creator script from a given git project')
     .command('enable [project-path]', 'enable git-crucible-review-creator script from a given git project')
-    .command('reviwer [project-path]', 'show configured reviewers');
+    .command('reviewer [project-path]', 'show configured reviewers');
 
 
 
