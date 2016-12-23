@@ -13,15 +13,15 @@ program
 removeReviewers();
 
 function removeReviewers() {
-    var args = program.args;
+    var reviewers = program.args;
     var action = 'remove reviewers of';
-    if (args.length === 1) action = 'remove reviewer ' + args.join(',') + ' of';
-    if (args.length > 1) action = 'remove reviewers ' + args.join(',') + ' of';
+    if (reviewers.length === 1) action = 'remove reviewer ' + reviewers[0] + ' of';
+    if (reviewers.length > 1) action = 'remove reviewers ' + reviewers.join(',') + ' of';
 
     operations.promptUserForConfirmation(action, {
         description: module.exports.description,
         version: module.exports.version
     }, function(location) {
-        operations.add(location, args);
+        operations.remove(location, reviewers);
     });
 }

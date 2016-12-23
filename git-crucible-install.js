@@ -81,8 +81,6 @@ function getConfirmation(message, done) {
     inquirer.prompt(questions).then(done);
 }
 
-
-
 function promptUserForConfigurations(done) {
     var questions = [{
             name: 'projectPath',
