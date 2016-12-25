@@ -14,7 +14,7 @@ Version: 1.0.0
 
 ### An Interactive command-line tool for [git-crucible-review-creator](https://github.com/kelumkps/git-crucible-review-creator).
 
-`git-crucible-cli` is a complementary project for [git-crucible-review-creator](https://github.com/kelumkps/git-crucible-review-creator) which comes with an Interactive command-line tool. `git-crucible-cli` is a hassle free way to download the latest stable release of [git-crucible-review-creator](https://github.com/kelumkps/git-crucible-review-creator) from Github, apply configurations and install it on any git project.
+**git-crucible-cli** is a complementary project for [git-crucible-review-creator](https://github.com/kelumkps/git-crucible-review-creator) which comes with an interactive command-line tool. `git-crucible-cli` is a hassle free way to download the latest stable release of [git-crucible-review-creator](https://github.com/kelumkps/git-crucible-review-creator) from Github, apply configurations and install it on any git project.
 
 Currently it's supporting below operations:
 
