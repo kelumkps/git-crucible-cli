@@ -1,5 +1,5 @@
 {
-  "name": "git-crucible-cli",
+  "name": "git-crucible",
   "version": "1.0.0",
   "description": "An interactive command-line tool for git-crucible-review-creator",
   "main": "index.js",
