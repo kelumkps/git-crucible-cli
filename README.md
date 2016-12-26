@@ -18,7 +18,7 @@ Version: 1.0.0
 
 Currently it's supporting below operations:
 
-1. Install and configure [git-crucible-review-creator](https://github.com/kelumkps/git-crucible-review-creator) script in to a desired git project
+1. Install and configure [git-crucible-review-creator](https://github.com/kelumkps/git-crucible-review-creator) script in to a desired git project.
 2. Completely uninstall an already installed pre-push script from a given git project.
 3. Temporary disable an installed pre-push script.
 4. Enable back an already disabled pre-push script.
@@ -26,6 +26,8 @@ Currently it's supporting below operations:
 6. Remove reviewers from a given git-crucible-review-creator script.
 
 ## Install
+
+Make sure you have installed latest version of Node.js
 
 `$ npm install -g git-crucible`
 
@@ -63,7 +65,7 @@ When you invoke install command, it will ask few questions to get below configur
 
 configuration | Description | Example Input
 --------------|-------------|---------
-project_location| Path to the git project to install the script| /home/my-user/worspace/my-project
+project_location| Path to the git project to install the script| /home/my-user/workspace/my-project
 crucible_url | URL of the Crucible Server |https://my-crucible-server:8080
 username | A valid username which as access to create code reviews on the above Crucible server. | myuser
 password | Login password of above user | 123456
